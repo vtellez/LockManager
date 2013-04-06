@@ -38,6 +38,51 @@
 </thead>
 <tbody>
 
+
+
+<script type="text/javascript">
+function changeLockState(lockId,lockValue)
+{
+    /*
+    * Función que se encarga de realizar una consulta AJAX para 
+    * cambiar el estado y actualizar el timestamp de un bloqueo
+    */
+    $.ajax(
+    {
+        type: 'POST',
+        url: '<?php echo site_url(); ?>/ws/changeLockState/'+lockId,
+        data: 'lock_id='+lockId,
+
+        beforeSend : function (resp) {
+       },
+
+        success: function(resp) 
+        {            
+            var mySplit = resp.split("#");
+            var date = mySplit[0]; 
+            var owner = mySplit[1]; 
+            var divid = "#lastupdate"+lockId;
+            $(divid).html(date+" por el usuario "+owner);
+  
+             $("#freeow").freeow("Bloqueo actualizado","El estado del bloqueo ha cambiado con éxito.", {
+                classes: ["smokey","success"],
+            });
+
+       },
+
+        error: function (xhr, ajaxOptions, thrownError)
+        {   
+ 
+             $("#freeow").freeow("Error",xhr.responseText, {
+                classes: ["smokey","error","slide"],
+            });
+
+        }
+    });
+}
+
+</script>
+
 <?php
 
 foreach ($locks->result() as $row)
@@ -54,12 +99,8 @@ foreach ($locks->result() as $row)
 
 	<script type="text/javascript">
 		$('#mySwitch<?php echo $row->lock_id; ?>').on('switch-change', function (e, data) {
-		$("#freeow").freeow("Another Title", "One more message", {
-    classes: ["smokey","slide"],
-
-});
-
-});
+    		changeLockState(<?php echo "$row->lock_id,'$row->value'"; ?>);
+        });
     </script>
 
         </div>
@@ -90,7 +131,9 @@ foreach ($locks->result() as $row)
 		?>
 	</td>
 	<td><a href="#"><?php echo $row->value; ?></a></td>
-	<td><?php echo date("d/m/Y, H:i",$row->date);?> por el usuario <a href="#"><?php echo $row->owner; ?></a></td>
+	<td>
+        <div id="lastupdate<?php echo $row->lock_id;?>">
+        <?php echo date("d/m/Y, H:i",$row->date);?> por el usuario <a href="#"><?php echo $row->owner; ?></a></div></td>
 </tr>
 
 
