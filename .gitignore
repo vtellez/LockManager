@@ -1,0 +1,9 @@
+*.swp
+*.log
+.DS_*
+ci/application/config/config.php
+ci/application/config/database.php
+scripts/logs/
+scripts/etc/config.pl
+scripts/etc/hosts
+scripts/bin/flag_lock
