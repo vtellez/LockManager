@@ -7,7 +7,7 @@
 <li class="active"><a href="#locks" data-toggle="tab"><i class="icon-user"></i> Usuarios</a></li>
 <li><a href="#locks" data-toggle="tab"><i class="icon-warning-sign"></i> Phishing</a></li>
 <li><a href="#locks" data-toggle="tab"><i class="icon-globe"></i> Direcciones IP</a></li>
-<li><a href="#locks" data-toggle="tab"><i class="icon-cloud"></i> Disco Virtual</a></li>
+<li><a href="#locks" data-toggle="tab"><i class="icon-hdd"></i> Disco Virtual</a></li>
 </ul>
 
 

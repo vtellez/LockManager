@@ -25,22 +25,6 @@
 <div id="freeow" class="freeow freeow-top-right"></div>
 
 <script type="text/javascript">
-</script>
-
-<table class="table table-bordered table-striped">
-<thead>
-<tr>
-<th width="90px">Estado</th>
-<th width="120px">Tipo de bloqueo</th>
-<th width="240px">Valor bloqueado</th>
-<th><i class="icon-double-angle-down"></i> Última actualización</th>
-</tr>
-</thead>
-<tbody>
-
-
-
-<script type="text/javascript">
 function changeLockState(lockId,lockValue)
 {
     /*
@@ -65,7 +49,7 @@ function changeLockState(lockId,lockValue)
             $(divid).html(date+" por el usuario "+owner);
   
              $("#freeow").freeow("Bloqueo actualizado","El estado del bloqueo ha cambiado con éxito.", {
-                classes: ["smokey","success"],
+                classes: ["smokey","success","slide"],
             });
 
        },
@@ -82,6 +66,18 @@ function changeLockState(lockId,lockValue)
 }
 
 </script>
+
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th width="90px">Estado</th>
+<th width="120px">Tipo de bloqueo</th>
+<th width="240px">Valor bloqueado</th>
+<th><i class="icon-double-angle-down"></i> Última actualización</th>
+</tr>
+</thead>
+<tbody>
+
 
 <?php
 
@@ -121,7 +117,7 @@ foreach ($locks->result() as $row)
 					break;
 
 				case '4':
-					echo "<i class='icon-cloud'></i> Disco Virtual";
+					echo "<i class='icon-hdd'></i> Disco Virtual";
 					break;
 
 				default:
@@ -130,10 +126,12 @@ foreach ($locks->result() as $row)
 			}	
 		?>
 	</td>
-	<td><a href="#"><?php echo $row->value; ?></a></td>
+	<td><a href="<?php echo site_url("locks/view/$row->lock_id"); ?>"><?php echo $row->value; ?></a></td>
 	<td>
         <div id="lastupdate<?php echo $row->lock_id;?>">
-        <?php echo date("d/m/Y, H:i",$row->date);?> por el usuario <a href="#"><?php echo $row->owner; ?></a></div></td>
+        <?php echo date("d/m/Y, H:i",$row->date);?> por el usuario <?php echo $row->owner; ?>
+        </div>
+    </td>
 </tr>
 
 
