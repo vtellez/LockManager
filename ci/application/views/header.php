@@ -15,7 +15,8 @@
     <title>Bloquea | Universidad de Sevilla</title>
 	<link href="<?php echo base_url("css/font-awesome.css"); ?>" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url("css/bootstrapSwitch.css"); ?>" rel="stylesheet" type="text/css">
-   	<link href="<?php echo base_url("css/bootstrap-spacelab.css"); ?>" rel="stylesheet" type="text/css">
+  <link href="<?php echo base_url("css/freeow/freeow.css"); ?>" rel="stylesheet" type="text/css">
+  <link href="<?php echo base_url("css/bootstrap-spacelab.css"); ?>" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url("css/extra.css"); ?>" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url("img/favicon.ico"); ?>" rel="stylesheet" type="text/css">   
     </head>
@@ -66,6 +67,7 @@ function sizeContent() {
   </script>
     <script src="<?php echo base_url("js/bootstrap.js");?>"></script>
     <script src="<?php echo base_url("js/bootstrapSwitch.js");?>"></script>
+    <script src="<?php echo base_url("js/jquery.freeow.js");?>"></script>
     
     <body>
 
