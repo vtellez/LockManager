@@ -22,69 +22,10 @@
 -->
 
 
-<div id="freeow-tr" class="freeow freeow-top-right"></div>
-<div id="freeow-br" class="freeow freeow-bottom-right"></div>
+<div id="freeow" class="freeow freeow-top-right"></div>
 
-<div id="demo">
-<div class="fieldset">
-<h3 class="legend">Freeow! Demo</h3>
-
-<div class="form-line">
-<label for="freeow-title">Title:</label>
-<input id="freeow-title" class="text" type="text" value="Freeow!" />
-</div>
-
-<div class="form-line">
-<label for="freeow-message">Message:</label>
-<textarea id="freeow-message">I am so hip I have trouble seeing over my pelvis!</textarea>
-</div>
-
-<div class="form-line">
-<label for="freeow-style">Style:</label>
-<select id="freeow-style">
-	<option value="smokey">Smokey</option>
-	<option value="gray">Gray</option>
-	<option value="osx">OSX</option>
-	<option value="simple">Simple</option>
-</select>
-</div>
-
-<div class="form-line">
-<label for="freeow-style">Position:</label>
-<select id="freeow-position">
-	<option value="#freeow-tr">Top Right</option>
-	<option value="#freeow-br">Bottom Right</option>
-</select>
-</div>
-
-<div class="form-line-check">
-<input id="freeow-append" type="checkbox" value="1" />
-<label for="freeow-append">Append</label>
-</div>
-
-<div class="form-line-check">
-<input id="freeow-error" type="checkbox" value="1" />
-<label for="freeow-error">Error Message</label>
-</div>
-
-<div class="form-line-check">
-<input id="freeow-dontautohide" type="checkbox" value="1" />
-<label for="freeow-dontautohide">Don't auto hide</label>
-</div>
-
-<div class="form-line-check">
-<input id="freeow-slide" type="checkbox" value="1" />
-<label for="freeow-slide">Slide effect</label>
-</div>
-
-<div class="form-line">
-<input id="freeow-show" type="button" value="Click to Freeow!" />
-</div>
-
-<div class="clear"><!-- --></div>
-</div>
-</div>
-
+<script type="text/javascript">
+</script>
 
 <table class="table table-bordered table-striped">
 <thead>
@@ -113,8 +54,12 @@ foreach ($locks->result() as $row)
 
 	<script type="text/javascript">
 		$('#mySwitch<?php echo $row->lock_id; ?>').on('switch-change', function (e, data) {
-		    alert("Hola");
-		});
+		$("#freeow").freeow("Another Title", "One more message", {
+    classes: ["smokey","slide"],
+
+});
+
+});
     </script>
 
         </div>
