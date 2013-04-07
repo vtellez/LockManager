@@ -19,33 +19,62 @@
 
         <div class="tab-content">
             <div class="tab-pane fade in active" id="info">
+
+            <?php if($error)
+                    {
+                        exit();   
+                    }
+            ?>
+
                 <div class="tab-title">
                 </div>
 
                 <div class="row-fluid">
                  <div class="span4 offset2">
-                <center><br/>
+                <center>
                 <a href="#" 
                 class="btn btn-large" style="padding-left:30px;padding-right:30px;padding-top:35px;">
-                <h3><i class="icon-user icon-4x"></i>
-                <br/><br/>Tipo de bloqueo</h3>
-                <p>Gestione todos los bloqueos registrados en el sistema</p>
+            	<?php
+			    switch ($lock->type_id) {
+	    			case $this->config->item('ip_type'):
+					    $icon = "globe";
+    					break;
+				
+	    			case $this->config->item('user_type'):
+					    $icon = "user";
+			    		break;
+				
+	    			case $this->config->item('phishing_type'):
+					    $icon = "warning-sign";
+    					break;
+
+	    			case $this->config->item('hdd_type'):
+					    $icon = "hdd";
+			    		break;
+
+    				default:
+					    $icon = "question-sign";
+		    			break;
+			        }	
+        		?>
+                <h3><i class="icon-<?php echo $icon;?> icon-4x"></i>
+                <br/><br/><?php echo $lock->value;?></h3>
+                <p>Identificador del recurso</p>
                 </a>
                 </center>
                 </div><!--/span-->
                 <div class="span4">
-                <center><br/>
+                <center>
                 <a href="#" 
                 class="btn btn-large" style="padding-left:30px;padding-right:30px;padding-top:35px;">
-                <h3><i class="icon-lock icon-4x"></i>
-                <br/><br/>Estado</h3>
-                <p>Gestione todos los bloqueos registrados en el sistema</p>
+                <h3><i class="icon-<?php echo ($lock->state == $this->config->item('lock_state')) ? 'lock' : 'unlock';?> icon-4x"></i>
+                <br/><br/><?php echo ($lock->state == $this->config->item('lock_state')) ? 'Bloqueado' : 'Desbloqueado';?>
+                </h3>
+                <p>Estado actual del bloqueo</p>
                 </a>
                 </center>
                 </div><!--/span-->
                 </div><!--/row-->
-
-
 <br/>
 <br/>
 
@@ -57,48 +86,65 @@
 </tr>
 </thead>
 <tbody>
-
 <tr>
-    <td><i class="icon-user"></i> Tipo de recurso<br/><br/></td>
+    <td><i class="icon-tag"></i> Tipo de recurso</td>
     <td>
+        	<?php
+			switch ($lock->type_id) {
+	    		case $this->config->item('ip_type'):
+					echo "<i class='icon-globe'></i> Dirección IP";
+					break;
+				
+	    		case $this->config->item('user_type'):
+					echo "<i class='icon-user'></i> Usuario";
+					break;
+				
+	    		case $this->config->item('phishing_type'):
+					echo "<i class='icon-warning-sign'></i> Phishing";
+					break;
+
+	    		case $this->config->item('hdd_type'):
+					echo "<i class='icon-hdd'></i> Disco Virtual";
+					break;
+
+				default:
+					echo "<i class='icon-question-sign'></i> No definido";
+					break;
+			}	
+		?>
+	
     </td>
 </tr>
-
-
 <tr>
-    <td><i class="icon-adjust"></i> Estado del bloqueo<br/><br/></td>
+    <td><i class="icon-adjust"></i> Estado del bloqueo</td>
     <td>
+        <?php echo ($lock->state == $this->config->item('lock_state')) ? 'Bloqueado' : 'Desbloqueado';?>
     </td>
 </tr>
-
-
 <tr>
-    <td><i class="icon-user"></i> Valor<br/><br/></td>
+    <td><i class="icon-edit"></i> Valor</td>
     <td>
+        <?php echo $lock->value;?>
     </td>
 </tr>
-
 <tr>
-    <td><i class="icon-calendar"></i> Última actualización<br/><br/></td>
+    <td><i class="icon-calendar"></i> Última actualización</td>
     <td>
+        <?php echo date("d/m/Y, H:i",$lock->date);?> por el usuario <?php echo $lock->owner; ?>
     </td>
 </tr>
-
-
 <tr>
-    <td><i class="icon-user"></i> Contador de bloqueos<br/><br/></td>
+    <td><i class="icon-dashboard"></i> Contador de bloqueos</td>
     <td>
+        <?php echo $lock->lock_counter;?>
     </td>
 </tr>
-
-
 <tr>
     <td><i class="icon-comment"></i> Comentarios<br/><br/></td>
     <td>
+        <?php echo $lock->comment;?>
     </td>
 </tr>
-
-
 </tbody>
 </table>
 

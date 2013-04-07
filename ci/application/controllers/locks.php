@@ -50,14 +50,19 @@ class Locks extends CI_Controller {
 
 		//Get locks list
 		$this->load->model('Locks_model');
-		$locks = $this->Locks_model->get_locks();
-
-
-		//Data for the view
+		$lock = $this->Locks_model->get_lock($lockId);
+        
+        $error = false;
+        if(!$lock){
+            $error = true;
+        }
+		
+        //Data for the view
 		$data = array(
 				'subtitle' => 'Vista detallada de bloqueo',
 				'icon' => 'icon-lock',
-                'locks' => $locks,
+                'lock' => $lock,
+                'error' => $error,
 			);
 		$this->load->view('header',$data);
 		$this->load->view('detailed_view');

@@ -1,27 +1,3 @@
-<!--
-<div class="btn-toolbar pull-right"> 
-
-<div class="btn-group">
-<a class="btn dropdown-toggle" data-toggle="dropdown" href="http://choquito.us.es/bloquea/index.php/locks#"><i class="icon-list-alt"></i> Registros <span class="caret"></span></a>
-<ul class="dropdown-menu">
-<li><a href=""> 15 registros</a></li>
-<li><a href=""> 30 registros</a></li>
-<li><a href=""> 50 registros</a></li>
-<li><a href=""> 100 registros</a></li>
-<li class="divider"></li>
-<li><a href=""><i class="icon-list-alt"></i> Toda la tabla</a></li>
-</ul>
-</div>
-
-<div class="btn-group">
-<a class="btn" href="http://choquito.us.es/bloquea/index.php/locks#"><i class="icon-print"></i> Imprimir</a>
-</div>
-
-
-</div>
--->
-
-
 <div id="freeow" class="freeow freeow-top-right"></div>
 
 <script type="text/javascript">
@@ -91,7 +67,7 @@ foreach ($locks->result() as $row)
 		data-on-label="<i class='icon-unlock'></i>" 
 		data-off-label="<i class='icon-lock'></i>"
 		id = "mySwitch<?php echo $row->lock_id; ?>">
-        <input type="checkbox" class="mySwitch" <?php echo ($row->state == 1) ? '' : 'checked';?>/>
+        <input type="checkbox" class="mySwitch" <?php echo ($row->state == $this->config->item('lock_state')) ? '' : 'checked';?>/>
 
 	<script type="text/javascript">
 		$('#mySwitch<?php echo $row->lock_id; ?>').on('switch-change', function (e, data) {
@@ -102,21 +78,21 @@ foreach ($locks->result() as $row)
         </div>
 	</td>
 	<td>
-		<?php
+     	<?php
 			switch ($row->type_id) {
-				case '1':
+	    		case $this->config->item('ip_type'):
 					echo "<i class='icon-globe'></i> Dirección IP";
 					break;
 				
-				case '2':
+	    		case $this->config->item('user_type'):
 					echo "<i class='icon-user'></i> Usuario";
 					break;
 				
-				case '3':
+	    		case $this->config->item('phishing_type'):
 					echo "<i class='icon-warning-sign'></i> Phishing";
 					break;
 
-				case '4':
+	    		case $this->config->item('hdd_type'):
 					echo "<i class='icon-hdd'></i> Disco Virtual";
 					break;
 

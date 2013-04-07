@@ -33,6 +33,22 @@ class Locks_model extends CI_Model {
         return $this->db->get('locks');
     }
 
+
+    function get_lock($lockId)
+    {
+        $this->db->where('lock_id',$lockId);
+        $locks = $this->db->get('locks');
+        $lock = $locks->row();
+
+        if ( $locks->num_rows != 1)
+        {
+            return false;
+        }else
+        {
+            return $lock;
+        }
+    }
+
 }
 
 /* EOF */
