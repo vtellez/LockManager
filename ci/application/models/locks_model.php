@@ -28,8 +28,9 @@ class Locks_model extends CI_Model {
     }
 
     
-    function get_locks()
+    function get_locks($where_array)
     {
+        $this->db->where($where_array);
         return $this->db->get('locks');
     }
 
