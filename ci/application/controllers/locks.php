@@ -28,12 +28,25 @@ class Locks extends CI_Controller {
 	}
 
 
-	public function repo ($section='all')
+	public function repo ($section='all',$state='1')
 	{
 
         $where = array();
 
-//       $where['state'] = $this->config->item('lock_state');
+        switch($state)
+        {
+            case $this->config->item('lock_state'):
+                $where['state'] = $this->config->item('lock_state');  
+                break;
+
+            case $this->config->item('unlock_state'):
+                $where['state'] = $this->config->item('unlock_state');  
+                break;
+
+            default: //all
+                break;  
+
+        }
 
         switch($section)
         {
@@ -67,38 +80,38 @@ class Locks extends CI_Controller {
         //Cargamos los enlaces a la paginacion
         $this->load->library('pagination');
         $config['per_page'] = $this->config->item('num_item_pagina');
-        $config['uri_segment'] = 5;
+        $config['uri_segment'] = 7;
         $config['total_rows'] = $locks->num_rows();
         $config['num_links'] = 2;
         $config['base_url'] = site_url("locks/repo/$section");
 
-$config['full_tag_open'] = '<div class="pagination pull-right"><ul>';
-$config['full_tag_close'] = '</ul></div><!--pagination-->';
- 
-$config['first_link'] = '<<';
-$config['first_tag_open'] = '<li class="prev page">';
-$config['first_tag_close'] = '</li>';
- 
-$config['last_link'] = '>>;';
-$config['last_tag_open'] = '<li class="next page">';
-$config['last_tag_close'] = '</li>';
- 
-$config['next_link'] = 'Siguiente >';
-$config['next_tag_open'] = '<li class="next page">';
-$config['next_tag_close'] = '</li>';
- 
-$config['prev_link'] = '< Anterior';
-$config['prev_tag_open'] = '<li class="prev page">';
-$config['prev_tag_close'] = '</li>';
- 
-$config['cur_tag_open'] = '<li class="active"><a href="">';
-$config['cur_tag_close'] = '</a></li>';
- 
-$config['num_tag_open'] = '<li class="page">';
-$config['num_tag_close'] = '</li>';
- 
-// $config['display_pages'] = FALSE;
-$config['anchor_class'] = 'follow_link';
+        $config['full_tag_open'] = '<div class="pagination pull-right"><ul>';
+        $config['full_tag_close'] = '</ul></div><!--pagination-->';
+         
+        $config['first_link'] = '<<';
+        $config['first_tag_open'] = '<li class="prev page">';
+        $config['first_tag_close'] = '</li>';
+         
+        $config['last_link'] = '>>';
+        $config['last_tag_open'] = '<li class="next page">';
+        $config['last_tag_close'] = '</li>';
+         
+        $config['next_link'] = 'Siguiente >';
+        $config['next_tag_open'] = '<li class="next page">';
+        $config['next_tag_close'] = '</li>';
+         
+        $config['prev_link'] = '< Anterior';
+        $config['prev_tag_open'] = '<li class="prev page">';
+        $config['prev_tag_close'] = '</li>';
+         
+        $config['cur_tag_open'] = '<li class="active"><a href="">';
+        $config['cur_tag_close'] = '</a></li>';
+         
+        $config['num_tag_open'] = '<li class="page">';
+        $config['num_tag_close'] = '</li>';
+         
+        // $config['display_pages'] = FALSE;
+        $config['anchor_class'] = 'follow_link';
 
 
 
@@ -107,6 +120,7 @@ $config['anchor_class'] = 'follow_link';
 				'subtitle' => 'Gestión de bloqueos',
 				'icon' => 'icon-lock',
                 'section' => $section,
+                'state' => $state,
 				'locks' => $locks,
                 'locks_count' => $locks->num_rows(),
                 'where_array' => $where,

@@ -37,7 +37,7 @@
 </div>
 
 
-<div class="tab-pane  <?php echo ($section != "search") ? 'active' : '';?>" id="locks">
+<div class="tab-pane <?php echo ($section != "search") ? 'active' : '';?>" id="locks">
 	<h3>
      	<?php
 			switch ($section) {
@@ -65,8 +65,22 @@
     </h3>
 	<div class="tabbable"> 
 		<ul class="nav nav-tabs">
-		<li class="active"><a href="#list" data-toggle="tab"><i class="icon-list-alt"></i> Listado de bloqueos</a></li>
-		<li><a href="#filter" data-toggle="tab"><i class="icon-filter"></i> Filtrar bloqueos</a></li>
+		<li <?php echo ($state == "1") ? 'class="active"' : '';?>>
+			<a href="<?php echo site_url("locks/repo/$section/1");?>">
+				<i class="icon-lock"></i> Activos
+			</a>
+		</li>
+		<li <?php echo ($state == "0") ? 'class="active"' : '';?>>
+			<a href="<?php echo site_url("locks/repo/$section/0");?>">
+				<i class="icon-unlock"></i> Inactivos
+			</a>
+		</li>
+		<li <?php echo ($state == "2") ? 'class="active"' : '';?>>
+			<a href="<?php echo site_url("locks/repo/$section/2");?>">
+				<i class="icon-list-alt"></i> Todos los estados
+			</a>
+		</li>
+		<li><a href="#filter" data-toggle="tab"><i class="icon-filter"></i> Filtrar</a></li>
 		<li><a href="#add" data-toggle="tab"><i class="icon-plus-sign"></i> Añadir nuevo</a></li>
 		</ul>
 

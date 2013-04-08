@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS locks (
         lock_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
         type_id INT UNSIGNED NOT NULL,
         state INT UNSIGNED DEFAULT 1 NOT NULL,
+        subtype VARCHAR(25),
         value VARCHAR(25) NOT NULL,
         owner VARCHAR(25) NOT NULL,
         comment VARCHAR (255),

@@ -33,6 +33,9 @@ $dbh = DBI->connect($connectionInfo,$userid,$passwd,
 
 open(IN,"$PATH/log/temp") or die("Can't locate file\n");
 
+my $owner = "dovecot";
+my $type = $USER;
+
 while (<IN>) 
 {
 	chomp($_);
@@ -41,11 +44,11 @@ while (<IN>)
 		my $value = $1;
 		$domain = $2;
 		my $timestamp = time;
-		my $owner = "dovecot";
+
 
 		# Check if the lock exists previously
 		$query = "SELECT lock_id,state,date FROM locks WHERE value = '"
-			     ."$value' AND type_id = $USER;";
+			     ."$value' AND type_id = $type;";
 
 		$sth = $dbh->prepare($query);
 		$sth->execute;
@@ -91,7 +94,7 @@ while (<IN>)
 		{
 			# Lock does not exists. Add new lock to database
 		    my $query = "INSERT INTO locks (type_id,state,value,owner,comment"
-		    			.",date) VALUES ($USER,$STATE_LOCK,'$value','dovecot',''"
+		    			.",date) VALUES ($type,$STATE_LOCK,'$value','dovecot',''"
 		    			.",$timestamp) ON DUPLICATE KEY UPDATE date ="
 		    			."$timestamp;";
 	    	
@@ -103,7 +106,7 @@ while (<IN>)
 }#while
 
 $timestamp = time;
-$lock_type = $USER;
+$lock_type = $type;
 $lock_owner = 'dovecot';
 
 # Desbloqueamos en bbdd aquellos bloqueos que ya no están en el fichero       		

@@ -54,8 +54,7 @@ else
 
 		cp $RUTA/log/$HOST $RUTA/log/temp
 
-		time perl $RUTA/bin/$PROGRAMA $RUTA
-		echo "Ejecución completada."
+		perl $RUTA/bin/$PROGRAMA $RUTA
 		echo ""
 
 		rm $RUTA/log/temp
