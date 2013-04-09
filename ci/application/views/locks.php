@@ -33,12 +33,12 @@
 
 <div class="tab-pane <?php echo ($section == "search") ? 'active' : '';?>" id="search">
 	<h3><i class="icon-search"></i> &nbsp;Filtrado de bloqueos</h3>
+	<?php $this->load->view('locks_search_form'); ?>
 	
 </div>
 
 <div class="tab-pane <?php echo ($section == "results") ? 'active' : '';?>" id="results">
 	<h3><i class="icon-search"></i> &nbsp;Resultados de la búsqueda</h3>
-	<?php $this->load->view('locks_search_form'); ?>
 </div>
 
 <div class="tab-pane <?php echo ($section != "search" && $section != "results") ? 'active' : '';?>" id="locks">

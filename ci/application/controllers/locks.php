@@ -76,7 +76,6 @@ class Locks extends CI_Controller {
         //Get locks list
 		$this->load->model('Locks_model');
 		$locks = $this->Locks_model->get_locks($where,$this->config->item('num_item_pagina'),(int)$this->uri->segment(5));
-//echo (int)$this->uri->segment(2,0);
         //Get total counter
         $total_counter = $this->Locks_model->get_locks_total($where);
 
