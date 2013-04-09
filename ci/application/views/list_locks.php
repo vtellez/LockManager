@@ -62,45 +62,21 @@ foreach ($locks->result() as $row)
 <tr>
 	<td>
         <div class="switch switch-small" 
-		data-on="success" 
-		data-off="danger" 
-		data-on-label="<i class='icon-unlock'></i>" 
-		data-off-label="<i class='icon-lock'></i>"
+        data-off="success" 
+        data-on="danger" 
+        data-off-label="<i class='icon-unlock'></i>" 
+        data-on-label="<i class='icon-lock'></i>"
 		id = "mySwitch<?php echo $row->lock_id; ?>">
-        <input type="checkbox" class="mySwitch" <?php echo ($row->state == $this->config->item('lock_state')) ? '' : 'checked';?>/>
-
-	<script type="text/javascript">
-		$('#mySwitch<?php echo $row->lock_id; ?>').on('switch-change', function (e, data) {
-    		changeLockState(<?php echo "$row->lock_id,'$row->value'"; ?>);
-        });
-    </script>
-
+        <input type="checkbox" class="mySwitch" <?php echo ($row->state == $this->config->item('lock_state')) ? 'checked' : '';?>/>
+	   <script type="text/javascript">
+	       	$('#mySwitch<?php echo $row->lock_id; ?>').on('switch-change', function (e, data) {
+        		changeLockState(<?php echo "$row->lock_id,'$row->value'"; ?>);
+          });
+         </script>
         </div>
 	</td>
 	<td>
-     	<?php
-			switch ($row->type_id) {
-	    		case $this->config->item('ip_type'):
-					echo "<i class='icon-globe'></i> Dirección IP";
-					break;
-				
-	    		case $this->config->item('user_type'):
-					echo "<i class='icon-user'></i> Usuario";
-					break;
-				
-	    		case $this->config->item('phishing_type'):
-					echo "<i class='icon-warning-sign'></i> Phishing";
-					break;
-
-	    		case $this->config->item('hdd_type'):
-					echo "<i class='icon-hdd'></i> Disco Virtual";
-					break;
-
-				default:
-					echo "<i class='icon-question-sign'></i> No definido";
-					break;
-			}	
-		?>
+        <i class='icon-<?php echo $row->icon; ?>'></i> <?php echo $row->resource; ?>
 	</td>
 	<td><a href="<?php echo site_url("locks/view/$row->lock_id"); ?>"><?php echo $row->value; ?></a></td>
 	<td>

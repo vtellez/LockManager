@@ -14,25 +14,6 @@
 </div>
 </div>
 
-<div class="control-group">
-<label class="control-label" for="select01">Estado de bloqueo</label>
-<div class="controls">
-            <div class="switch" 
-		data-on="success" 
-		data-off="danger" 
-		data-on-label="<i class='icon-unlock'></i>" 
-		data-off-label="<i class='icon-lock'></i>">
-                <input type="checkbox" checked />
-<!--
-$('#mySwitch').on('switch-change', function (e, data) {
-    var $el = $(data.el)
-      , value = data.value;
-    console.log(e, $el, value);
-});
--->
-            </div>
-</div>
-</div>
 
 <div class="control-group">
 <label class="control-label" for="input01">Valor a bloquear</label>
@@ -41,10 +22,28 @@ $('#mySwitch').on('switch-change', function (e, data) {
 </div>
 </div>
 
+<div class="control-group">
+<label class="control-label" for="select01">Estado de bloqueo</label>
+<div class="controls">
+     <div class="switch" 
+		data-off="success" 
+		data-on="danger" 
+		data-off-label="<i class='icon-unlock'></i>" 
+		data-on-label="<i class='icon-lock'></i>">
+                <input type="checkbox" value="<?php echo $this->config->item('lock_state');?>"/>
+            </div>
+</div>
+</div>
+
+<div class="control-group">
+<label class="control-label" for="input01">Comentarios</label>
+<div class="controls">
+<textarea rows="3" id="input01" class="input-xlarge"></textarea>
+</div>
+</div>
 
 <div class="form-actions">
-<button type="submit" class="btn btn-primary">Save changes</button>
-<button type="reset" class="btn">Cancel</button>
+<button type="submit" class="btn btn-primary"><i class="icon-plus"></i> Añadir nuevo bloqueo</button>
 </div>
 </fieldset>
 </form>

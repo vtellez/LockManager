@@ -12,8 +12,26 @@
                     while (list($key,$value) = each($where_array))
                     {
                     ?>
- 	        	  		<li><i class="icon-angle-right"></i> 
-		  			    <?php echo $key;?> es: <?php echo $value;?></li>
+ 	        	  		<li>
+ 	        	  			<i class="icon-angle-right"></i> 
+ 	        	  			<?php 
+ 	        	  				switch($key)
+ 	        	  				{
+ 	        	  					case 'state':
+ 	        	  						echo "Estado del bloqueo: ";
+ 	        	  						echo ($value == $this->config->item('lock_state')) ? 'Activo' : 'Inactivo';
+ 	        	  						break;
+
+ 	        	  					case 'locks.type_id':
+ 	        	  						echo "Tipo de bloqueo: ";
+ 	        	  						break;
+
+ 	        	  					default:
+ 	        	  						echo "$key es $value";
+ 	        	  						break;
+ 	        	  				}
+ 	        	  			?>
+		  				</li>
                     <?php
                     }
                 ?>

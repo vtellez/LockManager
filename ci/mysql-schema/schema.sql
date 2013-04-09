@@ -1,14 +1,15 @@
 CREATE TABLE IF NOT EXISTS lock_types (
         type_id INT UNSIGNED NOT NULL,
         name VARCHAR(25),
-
+        resource VARCHAR(25),
+        icon VARCHAR(25),
         PRIMARY KEY(type_id)
         ) ENGINE=InnoDB;
 
-INSERT INTO lock_types (type_id, name) VALUES ('1','IP');
-INSERT INTO lock_types (type_id, name) VALUES ('2','UVUS');
-INSERT INTO lock_types (type_id, name) VALUES ('3','Phishing');
-INSERT INTO lock_types (type_id, name) VALUES ('4','Cloud');
+INSERT INTO lock_types (type_id,name,resource,icon,description) VALUES ('1','ip','Dirección IP','globe');
+INSERT INTO lock_types (type_id,name,resource,icon,description) VALUES ('2','user','Usuario','user');
+INSERT INTO lock_types (type_id,name,resource,icon,description) VALUES ('3','phishing','Phishing','link');
+INSERT INTO lock_types (type_id,name,resource,icon,description) VALUES ('4','hdd','Disco Virtual','hdd');
 
 CREATE TABLE IF NOT EXISTS locks (
         lock_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -33,4 +34,3 @@ CREATE TABLE IF NOT EXISTS locks (
         FOREIGN KEY(type_id) REFERENCES lock_types(type_id)
         ON DELETE CASCADE
         ) ENGINE=InnoDB;
-

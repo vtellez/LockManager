@@ -7,7 +7,7 @@
 
 <li <?php echo ($section == "all") ? 'class="active"' : '';?>>
     <a href="<?php echo site_url('locks/index/all');?>">
-        <i class="icon-list-alt"></i> Todos</a>
+        <i class="icon-pushpin"></i> Todos</a>
 </li>
 
 <li <?php echo ($section == "user") ? 'class="active"' : '';?>>
@@ -16,28 +16,32 @@
 </li>
 <li <?php echo ($section == "phishing") ? 'class="active"' : '';?>>
     <a href="<?php echo site_url('locks/index/phishing');?>">
-        <i class="icon-warning-sign"></i> Phishing</a>
-</li>
-<li <?php echo ($section == "ip") ? 'class="active"' : '';?>>
-    <a href="<?php echo site_url('locks/index/ip');?>">
-        <i class="icon-globe"></i> Direcciones IP</a>
+        <i class="icon-link"></i> Phishing</a>
 </li>
 <li <?php echo ($section == "hdd") ? 'class="active"' : '';?>>
     <a href="<?php echo site_url('locks/index/hdd');?>">
         <i class="icon-hdd"></i> Disco Virtual</a>
+</li>
+<li <?php echo ($section == "ip") ? 'class="active"' : '';?>>
+    <a href="<?php echo site_url('locks/index/ip');?>">
+        <i class="icon-globe"></i> Direcciones IP</a>
 </li>
 </ul>
 
 
 <div class="tab-content">
 
-<div class="tab-pane  <?php echo ($section == "search") ? 'active' : '';?>" id="search">
+<div class="tab-pane <?php echo ($section == "search") ? 'active' : '';?>" id="search">
 	<h3><i class="icon-search"></i> &nbsp;Filtrado de bloqueos</h3>
+	
+</div>
+
+<div class="tab-pane <?php echo ($section == "results") ? 'active' : '';?>" id="results">
+	<h3><i class="icon-search"></i> &nbsp;Resultados de la búsqueda</h3>
 	<?php $this->load->view('locks_search_form'); ?>
 </div>
 
-
-<div class="tab-pane <?php echo ($section != "search") ? 'active' : '';?>" id="locks">
+<div class="tab-pane <?php echo ($section != "search" && $section != "results") ? 'active' : '';?>" id="locks">
 	<h3>
      	<?php
 			switch ($section) {
@@ -50,7 +54,7 @@
 					break;
 				
 	    		case "phishing":
-					echo "<i class='icon-warning-sign'></i> &nbsp;Bloqueos de Phishing";
+					echo "<i class='icon-link'></i> &nbsp;Bloqueos de Phishing";
 					break;
 
 	    		case "hdd":
@@ -58,30 +62,30 @@
 					break;
 
 				default:
-					echo "<i class='icon-list-alt'></i> &nbsp;Todos los bloqueos";
+					echo "<i class='icon-pushpin'></i> &nbsp;Todos los bloqueos";
 					break;
 			}	
 		?>
     </h3>
 	<div class="tabbable"> 
 		<ul class="nav nav-tabs">
-		<li <?php echo ($state == "1") ? 'class="active"' : '';?>>
-			<a href="<?php echo site_url("locks/repo/$section/1");?>">
+		<li <?php echo ($state == "lock") ? 'class="active"' : '';?>>
+			<a href="<?php echo site_url("locks/repo/$section/lock");?>">
 				<i class="icon-lock"></i> Activos
 			</a>
 		</li>
-		<li <?php echo ($state == "0") ? 'class="active"' : '';?>>
-			<a href="<?php echo site_url("locks/repo/$section/0");?>">
+		<li <?php echo ($state == "unlock") ? 'class="active"' : '';?>>
+			<a href="<?php echo site_url("locks/repo/$section/unlock");?>">
 				<i class="icon-unlock"></i> Inactivos
 			</a>
 		</li>
-		<li <?php echo ($state == "2") ? 'class="active"' : '';?>>
-			<a href="<?php echo site_url("locks/repo/$section/2");?>">
-				<i class="icon-list-alt"></i> Todos los estados
+		<li <?php echo ($state == "all") ? 'class="active"' : '';?>>
+			<a href="<?php echo site_url("locks/repo/$section/all");?>">
+				<i class="icon-list-alt"></i> Todos
 			</a>
 		</li>
 		<li><a href="#filter" data-toggle="tab"><i class="icon-filter"></i> Filtrar</a></li>
-		<li><a href="#add" data-toggle="tab"><i class="icon-plus-sign"></i> Añadir nuevo</a></li>
+		<li><a href="#add" data-toggle="tab"><i class="icon-plus-sign"></i> Añadir</a></li>
 		</ul>
 
 		<div class="tab-content">

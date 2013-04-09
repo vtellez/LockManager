@@ -28,18 +28,18 @@ class Locks extends CI_Controller {
 	}
 
 
-	public function repo ($section='all',$state='1')
+	public function repo ($section='search',$state='lock')
 	{
 
         $where = array();
 
         switch($state)
         {
-            case $this->config->item('lock_state'):
+            case "lock":
                 $where['state'] = $this->config->item('lock_state');  
                 break;
 
-            case $this->config->item('unlock_state'):
+            case "unlock":
                 $where['state'] = $this->config->item('unlock_state');  
                 break;
 
@@ -54,19 +54,19 @@ class Locks extends CI_Controller {
                 break;
 
             case "user":
-                $where['type_id'] = $this->config->item('user_type');   
+                $where['locks.type_id'] = $this->config->item('user_type');   
                 break;
 
             case "ip":
-                $where['type_id'] = $this->config->item('ip_type');   
+                $where['locks.type_id'] = $this->config->item('ip_type');   
                 break;
 
             case "phishing":
-                $where['type_id'] = $this->config->item('phishing_type');   
+                $where['locks.type_id'] = $this->config->item('phishing_type');   
                 break;
 
             case "hdd":
-                $where['type_id'] = $this->config->item('hdd_type');   
+                $where['locks.type_id'] = $this->config->item('hdd_type');   
                 break;
 
             default: //all
@@ -75,16 +75,21 @@ class Locks extends CI_Controller {
 		
         //Get locks list
 		$this->load->model('Locks_model');
-		$locks = $this->Locks_model->get_locks($where);
+		$locks = $this->Locks_model->get_locks($where,$this->config->item('num_item_pagina'),(int)$this->uri->segment(5));
+//echo (int)$this->uri->segment(2,0);
+        //Get total counter
+        $total_counter = $this->Locks_model->get_locks_total($where);
 
         //Cargamos los enlaces a la paginacion
         $this->load->library('pagination');
-        $config['per_page'] = $this->config->item('num_item_pagina');
-        $config['uri_segment'] = 7;
-        $config['total_rows'] = $locks->num_rows();
-        $config['num_links'] = 2;
-        $config['base_url'] = site_url("locks/repo/$section");
 
+        $config['uri_segment'] = 5;
+        $config['total_rows'] = $total_counter;
+        $config['base_url'] = site_url("locks/repo/$section/$state");
+
+        $config['per_page'] = $this->config->item('num_item_pagina');
+        $config['num_links'] = 2;
+        
         $config['full_tag_open'] = '<div class="pagination pull-right"><ul>';
         $config['full_tag_close'] = '</ul></div><!--pagination-->';
          
@@ -96,11 +101,11 @@ class Locks extends CI_Controller {
         $config['last_tag_open'] = '<li class="next page">';
         $config['last_tag_close'] = '</li>';
          
-        $config['next_link'] = 'Siguiente >';
+        $config['next_link'] = '>';
         $config['next_tag_open'] = '<li class="next page">';
         $config['next_tag_close'] = '</li>';
          
-        $config['prev_link'] = '< Anterior';
+        $config['prev_link'] = '<';
         $config['prev_tag_open'] = '<li class="prev page">';
         $config['prev_tag_close'] = '</li>';
          
@@ -110,19 +115,16 @@ class Locks extends CI_Controller {
         $config['num_tag_open'] = '<li class="page">';
         $config['num_tag_close'] = '</li>';
          
-        // $config['display_pages'] = FALSE;
-        $config['anchor_class'] = 'follow_link';
-
-
-
         $this->pagination->initialize($config);
+
 		$data = array(
 				'subtitle' => 'Gestión de bloqueos',
 				'icon' => 'icon-lock',
                 'section' => $section,
                 'state' => $state,
 				'locks' => $locks,
-                'locks_count' => $locks->num_rows(),
+                'lock_types' => $this->Locks_model->get_lock_types(),
+                'locks_count' => $total_counter,
                 'where_array' => $where,
                 'pagination' => $this->pagination,
 			);
@@ -130,6 +132,7 @@ class Locks extends CI_Controller {
 		$this->load->view('locks');
 		$this->load->view('footer');
 	}
+
 
 
     public function view($lockId)
@@ -145,7 +148,7 @@ class Locks extends CI_Controller {
         
         $error = false;
         if(!$lock){
-            $error = true;
+            redirect("/locks/repo/search", 'refresh');
         }
 		
         //Data for the view
@@ -153,7 +156,6 @@ class Locks extends CI_Controller {
 				'subtitle' => 'Vista detallada de bloqueo',
 				'icon' => 'icon-lock',
                 'lock' => $lock,
-                'error' => $error,
 			);
 		$this->load->view('header',$data);
 		$this->load->view('detailed_view');

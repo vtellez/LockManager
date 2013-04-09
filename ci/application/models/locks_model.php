@@ -28,17 +28,42 @@ class Locks_model extends CI_Model {
     }
 
     
-    function get_locks($where_array)
+    function get_locks($where_array,$limit,$offset)
     {
+        //Inner join
+        $this->db->select("*");
+        $this->db->from('locks');
+        $this->db->join('lock_types', "locks.type_id = lock_types.type_id");
         $this->db->where($where_array);
-        return $this->db->get('locks');
+        $this->db->limit($limit,$offset);
+        return $this->db->get();
+    }
+
+    function get_locks_total($where_array)
+    {
+        //Inner join
+        $this->db->select("*");
+        $this->db->from('locks');
+        $this->db->join('lock_types', "locks.type_id = lock_types.type_id");
+        $this->db->where($where_array);
+        return $this->db->get()->num_rows();
+    }
+
+    
+    function get_lock_types()
+    {
+        return $this->db->get('lock_types');
     }
 
 
     function get_lock($lockId)
     {
+        //Inner join
+        $this->db->select("*");
+        $this->db->from('locks');
+        $this->db->join('lock_types', "locks.type_id = lock_types.type_id");
         $this->db->where('lock_id',$lockId);
-        $locks = $this->db->get('locks');
+        $locks = $this->db->get();
         $lock = $locks->row();
 
         if ( $locks->num_rows != 1)

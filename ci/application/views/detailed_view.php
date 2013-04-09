@@ -1,14 +1,12 @@
 <div class="tabbable tabs-left">
 <ul class="nav nav-tabs">
-<li class="active"><a href="#tab1" data-toggle="tab"><i class="icon-eye-open"></i> Vista detallada</a></li>
+<li class="active"><a href="#tab1" data-toggle="tab"><i class="icon-lock"></i> Bloqueo</a></li>
 <li><a href="javascript:history.back(1);"><i class="icon-reply"></i> Volver atrás</a></li>
 </ul>
 
-
 <div class="tab-content">
 <div class="tab-pane active" id="tab1">
-	<h3><i class="icon-lock"></i> &nbsp;Vista dellata de bloqueo</h3>
-
+	<h3><i class="icon-<?php echo $lock->icon; ?>"></i> &nbsp;<?php echo $lock->resource; ?> (<?php echo $lock->value; ?>)</h3>
 
 <div class="tab-pane active" id="locks">
     <div class="tabbable"> 
@@ -19,45 +17,12 @@
 
         <div class="tab-content">
             <div class="tab-pane fade in active" id="info">
-
-            <?php if($error)
-                    {
-                        exit();   
-                    }
-            ?>
-
-                <div class="tab-title">
-                </div>
-
                 <div class="row-fluid">
                  <div class="span4 offset2">
                 <center>
                 <a href="#" 
                 class="btn btn-large" style="padding-left:30px;padding-right:30px;padding-top:35px;">
-            	<?php
-			    switch ($lock->type_id) {
-	    			case $this->config->item('ip_type'):
-					    $icon = "globe";
-    					break;
-				
-	    			case $this->config->item('user_type'):
-					    $icon = "user";
-			    		break;
-				
-	    			case $this->config->item('phishing_type'):
-					    $icon = "warning-sign";
-    					break;
-
-	    			case $this->config->item('hdd_type'):
-					    $icon = "hdd";
-			    		break;
-
-    				default:
-					    $icon = "question-sign";
-		    			break;
-			        }	
-        		?>
-                <h3><i class="icon-<?php echo $icon;?> icon-4x"></i>
+                <h3><i class="icon-<?php echo $lock->icon;?> icon-4x"></i>
                 <br/><br/><?php echo $lock->value;?></h3>
                 <p>Identificador del recurso</p>
                 </a>
@@ -89,30 +54,7 @@
 <tr>
     <td><i class="icon-tag"></i> Tipo de recurso</td>
     <td>
-        	<?php
-			switch ($lock->type_id) {
-	    		case $this->config->item('ip_type'):
-					echo "<i class='icon-globe'></i> Dirección IP";
-					break;
-				
-	    		case $this->config->item('user_type'):
-					echo "<i class='icon-user'></i> Usuario";
-					break;
-				
-	    		case $this->config->item('phishing_type'):
-					echo "<i class='icon-warning-sign'></i> Phishing";
-					break;
-
-	    		case $this->config->item('hdd_type'):
-					echo "<i class='icon-hdd'></i> Disco Virtual";
-					break;
-
-				default:
-					echo "<i class='icon-question-sign'></i> No definido";
-					break;
-			}	
-		?>
-	
+	   <i class='icon-<?php echo $lock->icon; ?>'></i> <?php echo $lock->resource; ?>
     </td>
 </tr>
 <tr>
