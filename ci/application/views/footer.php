@@ -1,21 +1,6 @@
-
-
 </section>
 </article>
 <!-- /Data block -->
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	<!--  Footer
       ================================================== -->
@@ -40,11 +25,5 @@
         <p><a href="http://www.us.es/campus/servicios/sic/">Servicio de Informática y Comunicaciones</a> - <a href="http://www.us.es/">Universidad de Sevilla</a> </p>
 	<br/>
       </footer>
-
 </div> <!-- /container -->
-
-
-
-    
-    
 </div></body></html>

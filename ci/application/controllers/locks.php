@@ -25,13 +25,28 @@ class Locks extends CI_Controller {
 	public function index($type='search')
 	{
         redirect("/locks/repo/$type", 'refresh');
-	}
 
+	}
 
 	public function repo ($section='search',$state='lock')
 	{
 
         $where = array();
+        $owner = "";
+        $value = "";
+        $lock_type = "";
+        $results = false;
+
+        $query = $this->input->post('query');
+      
+        if($query){
+            $results = true;
+            $section = 'results';
+            $lock_type = $this->input->post('lock_type');
+            $state = $this->input->post('state');
+            $value = $this->input->post('value');
+            $owner = $this->input->post('owner');
+        }
 
         switch($state)
         {
@@ -50,9 +65,6 @@ class Locks extends CI_Controller {
 
         switch($section)
         {
-            case "search":
-                break;
-
             case "user":
                 $where['locks.type_id'] = $this->config->item('user_type');   
                 break;
@@ -69,10 +81,30 @@ class Locks extends CI_Controller {
                 $where['locks.type_id'] = $this->config->item('hdd_type');   
                 break;
 
-            default: //all
+            case "results":
+                if ($lock_type != "Cualquiera")
+                {
+                    $where['locks.type_id'] = $lock_type;   
+                }
+
+                if ($value)
+                {
+                    $temp = str_replace("*", "%", $value);
+                    $where['value like'] = $temp;   
+                }
+
+                if ($owner)
+                {
+                    $temp = str_replace("*", "%", $owner);
+                    $where['owner like'] = $temp;   
+                }
+
+                break;
+
+            default: 
                 break;   
         }
-		
+
         //Get locks list
 		$this->load->model('Locks_model');
 		$locks = $this->Locks_model->get_locks($where,$this->config->item('num_item_pagina'),(int)$this->uri->segment(5));
@@ -85,34 +117,7 @@ class Locks extends CI_Controller {
         $config['uri_segment'] = 5;
         $config['total_rows'] = $total_counter;
         $config['base_url'] = site_url("locks/repo/$section/$state");
-
         $config['per_page'] = $this->config->item('num_item_pagina');
-        $config['num_links'] = 2;
-        
-        $config['full_tag_open'] = '<div class="pagination pull-right"><ul>';
-        $config['full_tag_close'] = '</ul></div><!--pagination-->';
-         
-        $config['first_link'] = '<<';
-        $config['first_tag_open'] = '<li class="prev page">';
-        $config['first_tag_close'] = '</li>';
-         
-        $config['last_link'] = '>>';
-        $config['last_tag_open'] = '<li class="next page">';
-        $config['last_tag_close'] = '</li>';
-         
-        $config['next_link'] = '>';
-        $config['next_tag_open'] = '<li class="next page">';
-        $config['next_tag_close'] = '</li>';
-         
-        $config['prev_link'] = '<';
-        $config['prev_tag_open'] = '<li class="prev page">';
-        $config['prev_tag_close'] = '</li>';
-         
-        $config['cur_tag_open'] = '<li class="active"><a href="">';
-        $config['cur_tag_close'] = '</a></li>';
-         
-        $config['num_tag_open'] = '<li class="page">';
-        $config['num_tag_close'] = '</li>';
          
         $this->pagination->initialize($config);
 
@@ -126,11 +131,33 @@ class Locks extends CI_Controller {
                 'locks_count' => $total_counter,
                 'where_array' => $where,
                 'pagination' => $this->pagination,
+                'results' => $results,
 			);
 		$this->load->view('header',$data);
 		$this->load->view('locks');
 		$this->load->view('footer');
 	}
+
+
+    public function add()
+    {
+        $query = $this->input->post('query');
+     
+        if($query){
+            $section = 'results';
+            $lock_type = $this->input->post('lock_type');
+            $state = $this->input->post('state');
+            $value = $this->input->post('value');
+            if(!$state){
+                $state = $this->config->item('unlock_state');
+            }
+            $comment = $this->input->post('comments');
+
+            $this->load->model('Locks_model');
+            $this->Locks_model->add_lock($lock_type,$state,$value,$comment);            
+        }         
+        redirect("/locks/repo/all", 'refresh');
+    }
 
 
 

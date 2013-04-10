@@ -1,29 +1,30 @@
-<form class="form-horizontal" method="POST" action="<?php echo site_url('locks/repo/search');?>">
+<form class="form-horizontal" action="<?php echo site_url('locks/repo/');?>" method="post">
 <fieldset>
 <legend>Formulario de búsqueda</legend>
 
 <div class="control-group">
-<label class="control-label" for="select01">Tipo de bloqueo</label>
+<label class="control-label" for="lock_type">Tipo de bloqueo</label>
 <div class="controls">
-<select id="select01">
+<select name="lock_type">
 <option>Cualquiera</option>
-<option>2</option>
-<option>3</option>
-<option>4</option>
-<option>5</option>
+<?php foreach ($lock_types->result() as $row)
+{ 
+    echo "<option value=\"$row->type_id\">$row->resource</option>";
+}
+?>
 </select>
 </div>
 </div>
 
 <div class="control-group">
-<label class="control-label" for="select01">Estado de bloqueo</label>
+<label class="control-label" for="state">Estado de bloqueo</label>
 <div class="controls">
-<select id="select01">
+<select name="state">
 <option>Cualquiera</option>
-	<option value="<?php echo $this->config->item('lock_state');?>">
+	<option value="lock">
 			Bloqueos activos
 	</option>
-	<option value="<?php echo $this->config->item('unlock_state');?>">
+	<option value="unlock">
 			Bloqueos inactivos
 	</option>
 </select>
@@ -31,21 +32,22 @@
 </div>
 
 <div class="control-group">
-<label class="control-label" for="input01">Valor bloqueado</label>
+<label class="control-label" for="value">Valor bloqueado</label>
 <div class="controls">
-<input type="text" class="input-xlarge" id="input01">
+<input type="text" class="input-xlarge" name="value">
 <p class="help-block">Admite '*' como comodín.</p>
 </div>
 </div>
 
 <div class="control-group">
-<label class="control-label" for="input01">Usuario</label>
+<label class="control-label" for="owner">Usuario</label>
 <div class="controls">
-<input type="text" class="input-xlarge" id="input01">
+<input type="text" class="input-xlarge" name="owner">
 <p class="help-block">Admite '*' como comodín.</p>
 </div>
 </div>
 
+<input type="hidden" name="query" value="1" />
 
 <div class="form-actions">
 <button type="submit" class="btn btn-primary">

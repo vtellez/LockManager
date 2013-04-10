@@ -24,10 +24,15 @@ class Search extends CI_Controller {
 
 	public function index()
 	{
-		//Data for the view
+	
+        //Get locks list
+		$this->load->model('Locks_model');
+
+    	//Data for the view
 		$data = array(
 				'subtitle' => 'Gestión de búsquedas',
 				'icon' => 'icon-search',
+                'lock_types' => $this->Locks_model->get_lock_types(),
 			);
 		$this->load->view('header',$data);
 		$this->load->view('search');

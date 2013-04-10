@@ -1,15 +1,20 @@
-
-
 <div class="tabbable tabs-left">
 <ul class="nav nav-tabs">
-<li <?php echo ($section == "search") ? 'class="active"' : '';?>>
-    <a href="#search" data-toggle="tab"><i class="icon-search"></i> Buscar</a></li>
-
+<li <?php echo ($section == "search" || $section == "results") ? 'class="active"' : '';?>>
+    <a href="#search" data-toggle="tab">
+    	<i class="icon-search"></i> Buscar
+    </a>
+</li>
+<li <?php echo ($section == "add") ? 'class="active"' : '';?>>
+    <a href="#new" data-toggle="tab">
+    	<i class="icon-plus"></i> Añadir
+    </a>
+</li>
+<h4 style="margin-top:25px; margin-bottom:10px; color: #666;">Consultar</h4>
 <li <?php echo ($section == "all") ? 'class="active"' : '';?>>
     <a href="<?php echo site_url('locks/index/all');?>">
         <i class="icon-pushpin"></i> Todos</a>
 </li>
-
 <li <?php echo ($section == "user") ? 'class="active"' : '';?>>
     <a href="<?php echo site_url('locks/index/user');?>">
         <i class="icon-user"></i> Usuarios</a>
@@ -31,17 +36,52 @@
 
 <div class="tab-content">
 
-<div class="tab-pane <?php echo ($section == "search") ? 'active' : '';?>" id="search">
-	<h3><i class="icon-search"></i> &nbsp;Filtrado de bloqueos</h3>
-	<?php $this->load->view('locks_search_form'); ?>
-	
+<div class="tab-pane <?php echo ($section == "search" || $section == "results") ? 'active' : '';?>" id="search">
+		<h3><i class="icon-search"></i> &nbsp;Filtrado de bloqueos</h3>
+	<?php 
+		if($results || $section == "results"){
+	?>
+	<div class="tabbable"> 
+		<ul class="nav nav-tabs">
+		<li class="active">
+			<a href="#results" data-toggle="tab"><i class="icon-list-alt"></i>
+			 Resultados</a>
+		</li>
+		<li><a href="#filter" data-toggle="tab"><i class="icon-search"></i> 
+			Nueva búsqueda</a>
+		</li>
+		</ul>
+
+		<div class="tab-content">
+			<div class="tab-pane fade in active" id="results">
+				<div class="tab-title">
+					<h4>Resultados de la búsqueda (<?php echo $locks_count;?>)</h4>
+				</div>
+				<?php $this->load->view('filter_conditions'); ?>
+				<?php $this->load->view('list_locks',$locks); ?>
+			</div>
+			<div class="tab-pane fade in" id="filter">
+				<?php $this->load->view('locks_search_form'); ?>
+			</div>
+		</div>
+	</div>
+	<?php 
+		}else
+		{ 
+		 $this->load->view('locks_search_form');
+		} 
+	?>	
 </div>
 
-<div class="tab-pane <?php echo ($section == "results") ? 'active' : '';?>" id="results">
-	<h3><i class="icon-search"></i> &nbsp;Resultados de la búsqueda</h3>
+<div class="tab-pane <?php echo ($section == "add") ? 'active' : '';?>" id="new">
+	<h3><i class="icon-plus"></i> &nbsp;Alta de nuevo bloqueo</h3>
+	<?php $this->load->view('locks_add_form'); ?>
 </div>
 
-<div class="tab-pane <?php echo ($section != "search" && $section != "results") ? 'active' : '';?>" id="locks">
+
+
+<?php if ($section != "search" && $section != "results") { ?>
+<div class="tab-pane active" id="locks">
 	<h3>
      	<?php
 			switch ($section) {
@@ -105,6 +145,8 @@
 		</div>
 	</div>
 </div>
+
+<?php } ?>
 
 </div>
 </div> <!-- tabbable tabs-left -->

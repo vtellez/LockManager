@@ -1,11 +1,6 @@
 <?php
-
 	$controller_name = $this->uri->segment(1);
-
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
@@ -48,9 +43,6 @@ $(function(){
 
 //Initial load of page
 $(document).ready(sizeContent);
-
-//Every resize of window
-$(document).resize(sizeContent);
 
 //Every resize of window
 $(window).resize(sizeContent);

@@ -22,8 +22,20 @@
  	        	  						echo ($value == $this->config->item('lock_state')) ? 'Activo' : 'Inactivo';
  	        	  						break;
 
+                                    case 'value like':
+ 	        	  						echo "Valor del bloqueo: ".str_replace("%", "*", $value);
+ 	        	  						break;
+
+                                    case 'owner like':
+ 	        	  						echo "Bloqueo realizado por: ".str_replace("%", "*", $value);
+ 	        	  						break;
+
  	        	  					case 'locks.type_id':
  	        	  						echo "Tipo de bloqueo: ";
+ 	        	  						echo ($value == $this->config->item('ip_type')) ? 'Dirección IP' : '';
+ 	        	  						echo ($value == $this->config->item('user_type')) ? 'Usuario' : '';
+ 	        	  						echo ($value == $this->config->item('hdd_type')) ? 'Disco Virtual' : '';
+ 	        	  						echo ($value == $this->config->item('phishing_type')) ? 'Dirección Phishing' : '';
  	        	  						break;
 
  	        	  					default:
