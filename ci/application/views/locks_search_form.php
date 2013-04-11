@@ -20,7 +20,7 @@
 <label class="control-label" for="state">Estado de bloqueo</label>
 <div class="controls">
 <select name="state">
-<option>Cualquiera</option>
+<option value="all">Cualquiera</option>
 	<option value="lock">
 			Bloqueos activos
 	</option>

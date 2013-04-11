@@ -26,61 +26,28 @@ $PATH = $ARGV[0];
 require("$PATH/etc/config.pl");
 require("$PATH/bin/functions.pl");
 
-
 open(IN,"$PATH/log/temp") or die("Can't locate file\n");
 open(OUTPUT,"> $PATH/log/output") or die("Can't create output file\n");
 
-my $owner = "dovecot";
-my $type = $USER;
+my $owner = "qmail";
+my $type = $IP;
 
 while (<IN>) 
 {
 	chomp($_);
-	if ($_ =~ /(.+)@(.+)/)
+	if ($_ =~ /(.+):deny/)
 	{
 		my $value = $1;
-		$domain = $2;
-		
+
 		my $comment = '';
-		my $subtype = 'us.es';
+		my $subtype = 'SMTP-AUTH';
 
 		updateState($value,$type,$owner,$subtype,$comment);
-
-
+		
+	}else {
+		#write line
 	} #if
 }#while
-
-
-
-# Database connection
-$dbh = DBI->connect($connectionInfo,$userid,$passwd,
-					{mysql_enable_utf8=>1}) or die 
-					"Can't connect to the database.\n";
-
-$timestamp = time;
-
-
-# Desbloqueamos en bbdd aquellos bloqueos que ya no están en el fichero       		
-$query = "UPDATE locks SET state = $STATE_UNLOCK, date ="
-	     ."$timestamp, owner = '$owner' where state = $STATE_LOCK AND "
-	     ."date <= $SYSDATE AND type_id = $type";	
-
-$sth = $dbh->prepare($query);
-$sth->execute();
-
-# Generamos el fichero de bloqueo
-$query = "SELECT value from locks where state = $STATE_LOCK AND type_id = $type;";
-
-$sth = $dbh->prepare($query);
-$sth->execute();
-
-
-while (my $row = $sth->fetchrow_arrayref) 
-{
-	my $value = $row->[0];
-	print OUTPUT "$value\n";	
-	print OUTPUT "$value\@$domain\n";
-}
 
 close OUTPUT;
 

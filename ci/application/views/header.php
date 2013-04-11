@@ -114,29 +114,11 @@ function sizeContent() {
           </li>
 
 	      <li>
-                <a data-toggle="modal" href="#logout">
+                <a href="#">
                 <i class="icon-off"></i> Salir</a>
           </li>
     </ul>
   </div>
-
-
-<div id="logout" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              <h3 class="fuente"> <i class="icon-off"></i> &nbsp;Confirmar cierre de sesión</h3>
-            </div>
-            <div class="modal-body">		
-		<p><br>¿Está seguro de que desea cerrar su sesión de usuario abierta en la <a href="http://www.us.es/campus/univirtual/gestioniden/opensso.html" target="_blank">plataforma Single Sign-On</a> de la Universidad de Sevilla para la cuenta <b>vtellez-ext</b>?<br></p>
-            </div>
-            <div class="modal-footer">
-              <button class="btn" data-dismiss="modal">Cerrar ventana</button>
-              <button class="btn btn-primary" data-dismiss="modal">Cerrar ventana</button>
-            </div>
-</div>
-
-
-
 
 <article class="data-block">
 <header>

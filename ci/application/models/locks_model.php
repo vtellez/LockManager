@@ -35,6 +35,7 @@ class Locks_model extends CI_Model {
         $this->db->from('locks');
         $this->db->join('lock_types', "locks.type_id = lock_types.type_id");
         $this->db->where($where_array);
+        $this->db->order_by('date', 'desc'); 
         $this->db->limit($limit,$offset);
         return $this->db->get();
     }

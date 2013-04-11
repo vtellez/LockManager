@@ -49,25 +49,23 @@ else
 	    echo "Descargando el log $LOG de $HOST......."
 	    scp root@$IP:$LOG $RUTA/log/$HOST
 
-	    echo ""
 		echo "Ejecutando $PROGRAMA sobre $RUTA/log/$HOST";
 
 		cp $RUTA/log/$HOST $RUTA/log/temp
 
 		perl $RUTA/bin/$PROGRAMA $RUTA
-		echo ""
-
 		rm $RUTA/log/temp
 
 		echo "Nuevo fichero $LOG generado con éxito."
-		echo ""
 
-	    echo "Subiendo el log $LOG a $HOST......."
-	    #scp $RUTA/log/output root@$IP:$LOG
-	    rm $RUTA/log/output
-
+		if [ -f $RUTA/log/output ]; then
+			echo "Subiendo el log $LOG a $HOST......."
+	   		#scp $RUTA/log/output root@$IP:$LOG
+	   		#rm $RUTA/log/output
+		fi
+        echo ""
+        echo ""
 	done
-
 
 	SYSDATE=`date +%s`;
 	echo "Update SYSDATE in config file to $SYSDATE"
@@ -79,5 +77,4 @@ else
 
 	#Liberamos el flag de bloqueo
 	rm $FLAG
-	#rm $RUTA/log/output
 fi

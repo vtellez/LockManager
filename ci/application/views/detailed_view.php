@@ -58,6 +58,12 @@
     </td>
 </tr>
 <tr>
+    <td><i class="icon-tag"></i> Subtipo</td>
+    <td>
+       <?php echo $lock->subtype; ?>
+    </td>
+</tr>
+<tr>
     <td><i class="icon-adjust"></i> Estado del bloqueo</td>
     <td>
         <?php echo ($lock->state == $this->config->item('lock_state')) ? 'Bloqueado' : 'Desbloqueado';?>

@@ -36,7 +36,7 @@ class Locks extends CI_Controller {
         $value = "";
         $lock_type = "";
         $results = false;
-
+        
         $query = $this->input->post('query');
       
         if($query){

@@ -81,7 +81,7 @@ foreach ($locks->result() as $row)
 	<td><a href="<?php echo site_url("locks/view/$row->lock_id"); ?>"><?php echo $row->value; ?></a></td>
 	<td>
         <div id="lastupdate<?php echo $row->lock_id;?>">
-        <?php echo date("d/m/Y, H:i",$row->date);?> por el usuario <?php echo $row->owner; ?>
+        <?php echo date("d/m/Y, H:i",$row->date);?> por <?php echo $row->owner; ?>
         </div>
     </td>
 </tr>
