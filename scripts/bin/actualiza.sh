@@ -26,16 +26,15 @@ RUTA=`echo /home/victortellez/projects/bloquea/scripts`;
 FLAG=`echo $RUTA/bin/flag_lock`;
 
 if [ -f $FLAG ]; then
-	#El bloqueo esta activo por otra ejecución concurrente de indexado
 	exit
 else
-	#Creamos el flag de bloqueo
+	# Create flag lock
 	touch $FLAG
 
 	date
 	echo ""
 	echo "------------------------------------------------------------------"
-	echo "         >>>>> Procesando logs de bloqueos remotos"
+	echo "         >>>>> Procesing remote log files"
 	echo "------------------------------------------------------------------"
 	echo ""
 
@@ -44,22 +43,22 @@ else
 		HOST=`echo $line |  cut -d , -f1`
 	    IP=`echo $line |  cut -d , -f2`
 	    LOG=`echo $line |  cut -d , -f3`
-	    PROGRAMA=`echo $line |  cut -d , -f4`
+	    PROGRAM=`echo $line |  cut -d , -f4`
 
-	    echo "Descargando el log $LOG de $HOST......."
+	    echo "Downloading log file $LOG de $HOST......."
 	    scp root@$IP:$LOG $RUTA/log/$HOST
 
-		echo "Ejecutando $PROGRAMA sobre $RUTA/log/$HOST";
+		echo "Runing parser over $RUTA/log/$HOST";
 
 		cp $RUTA/log/$HOST $RUTA/log/temp
 
-		perl $RUTA/bin/$PROGRAMA $RUTA
+		perl $RUTA/bin/parser.pl $RUTA $HOST $PROGRAM
 		rm $RUTA/log/temp
 
-		echo "Nuevo fichero $LOG generado con éxito."
+		echo "Output file $LOG was generated sucefully."
 
 		if [ -f $RUTA/log/output ]; then
-			echo "Subiendo el log $LOG a $HOST......."
+			echo "Uploading output file $LOG to $HOST......."
 	   		#scp $RUTA/log/output root@$IP:$LOG
 	   		#rm $RUTA/log/output
 		fi
@@ -75,6 +74,6 @@ else
 
 	date
 
-	#Liberamos el flag de bloqueo
+	# Delete flag lock
 	rm $FLAG
 fi

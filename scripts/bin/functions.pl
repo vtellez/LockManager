@@ -23,8 +23,10 @@
 # */
 
 sub updateState {
+	my ($value,$type,$owner,$subtype)=@_;
 
-	my ($value,$type,$owner,$subtype,$comment)=@_;
+	$new_state = $STATE_UNLOCK;
+
 
 	# Database connection
 	$dbh = DBI->connect($connectionInfo,$userid,$passwd,
@@ -33,69 +35,74 @@ sub updateState {
 
 	my $timestamp = time;
 
-	    # Check if the lock exists previously
-		$query = "SELECT lock_id,state,date FROM locks WHERE value = '"
-			     ."$value' AND type_id = $type;";
+    # Check if the lock exists previously
+	$query = "SELECT lock_id,state,date FROM locks WHERE value = '"
+		     ."$value' AND type_id = $type AND subtype = '$subtype';";
 
+	$sth = $dbh->prepare($query);
+    $sth->execute();
+	my @row;
+
+	if ( $sth->rows )
+	{
+		@row = $sth->fetchrow_array(  );
+		
+		my $lock_id = $row[0];
+		my $lock_state = $row[1];
+		my $lock_date = $row[2];
+
+    	if ( ($SYSDATE >= $lock_date) && ($lock_state eq $STATE_UNLOCK) )
+    	{
+        		# Change lock db state to lock
+				$query = "UPDATE locks SET state = $STATE_LOCK, date ="
+             			."$timestamp, owner = '$owner' where lock_id = $lock_id;";	
+    	    	print "Changing state to lock for $value\n";            	
+             	$sth = $dbh->prepare($query);
+             	$sth->execute();
+
+             	$new_state = $STATE_LOCK;
+
+				# Inc lock's lock_counter
+             	$query = "UPDATE locks SET lock_counter = lock_counter + 1 "
+             			.", owner = '$owner'"
+             			."where lock_id = $lock_id;";
+             	$sth = $dbh->prepare($query);
+             	$sth->execute();
+    	}
+
+    	# Update timestamp
+    	if ( $lock_state eq $STATE_LOCK )
+    	{
+			$query = "UPDATE locks SET date = $timestamp where lock_id = $lock_id;";	
+
+			$new_state = $STATE_LOCK;
+
+	    	print "Updating timestamp for $value\n";  
+
+	        $sth = $dbh->prepare($query);
+            $sth->execute();
+  		}
+	}
+	else
+	{
+		# Lock does not exists. Add new lock to database
+	    my $query = "INSERT INTO locks (type_id,subtype,state,value,owner"
+	    			.",date) VALUES ($type,'$subtype',$STATE_LOCK,'$value','$owner'"
+	    			.",$timestamp) ON DUPLICATE KEY UPDATE date ="
+	    			."$timestamp;";
+
+	    $new_state = $STATE_LOCK;
+    	
+    	print "Adding new lock for $value\n";	
 		$sth = $dbh->prepare($query);
-	    $sth->execute();
-		my @row;
-
-		if ( $sth->rows )
-		{
-			@row = $sth->fetchrow_array(  );
-			
-			my $lock_id = $row[0];
-			my $lock_state = $row[1];
-			my $lock_date = $row[2];
-
-        	if ( ($SYSDATE >= $lock_date) && ($lock_state eq $STATE_UNLOCK) )
-        	{
-	        		# Change lock db state to lock
-					$query = "UPDATE locks SET state = $STATE_LOCK, date ="
-	             			."$timestamp, owner = '$owner' where lock_id = $lock_id;";	
-	    	    	print "Changing state to lock for $value\n";            	
-	             	$sth = $dbh->prepare($query);
-	             	$sth->execute();
-
-					# Inc lock's lock_counter
-	             	$query = "UPDATE locks SET lock_counter = lock_counter + 1 "
-	             			.", owner = '$owner'"
-	             			."where lock_id = $lock_id;";
-	             	$sth = $dbh->prepare($query);
-	             	$sth->execute();
-        	}
-
-        	# Update timestamp
-        	if ( $lock_state eq $STATE_LOCK )
-        	{
-				$query = "UPDATE locks SET date = $timestamp where lock_id = $lock_id;";	
-
-		    	print "Updating timestamp to lock for $value\n";  
-
-		        $sth = $dbh->prepare($query);
-	            $sth->execute();
-	  		}
-		}
-		else
-		{
-			# Lock does not exists. Add new lock to database
-		    my $query = "INSERT INTO locks (type_id,subtype,state,value,owner,comment"
-		    			.",date) VALUES ($type,'$subtype',$STATE_LOCK,'$value','$owner','$comment'"
-		    			.",$timestamp) ON DUPLICATE KEY UPDATE date ="
-		    			."$timestamp;";
-	    	
-	    	print "Adding new lock for $value\n";	
-			$sth = $dbh->prepare($query);
-	        $sth->execute();
-		}
+        $sth->execute();
+	}
 
 
-		$sth->finish;
+$sth->finish;
 $dbh->disconnect;
-
-
-   return 28;
+	
+	return $new_state;
 }
 
 
