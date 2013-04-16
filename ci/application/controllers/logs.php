@@ -22,12 +22,61 @@
 
 class Logs extends CI_Controller {
 
-	public function index()
+	public function index($type='search')
 	{
+        redirect("/logs/repo/$type", 'refresh');
+
+	}
+
+	public function repo($section='search',$state='lock')
+	{
+
+		$where = array();
+
+        switch($section)
+        {
+            case "users":
+                $where['logs.type'] = "users";   
+                break;
+
+            case "auto":
+                $where['logs.type'] = "auto";   
+                break;
+
+            case "results":
+                break;
+
+            default: //all
+                break;   
+        }
+
+        //Get locks list
+		$this->load->model('Locks_model');
+		$rows = $this->Locks_model->get_locks($where,$this->config->item('num_item_pagina'),(int)$this->uri->segment(5));
+        //Get total counter
+        $total_counter = $this->Locks_model->get_locks_total($where);
+
+        //Cargamos los enlaces a la paginacion
+        $this->load->library('pagination');
+
+        $config['uri_segment'] = 5;
+        $config['total_rows'] = $total_counter;
+        $config['base_url'] = site_url("locks/repo/$section/$state");
+        $config['per_page'] = $this->config->item('num_item_pagina');
+         
+        $this->pagination->initialize($config);
+
+
 		//Data for the view
 		$data = array(
 				'subtitle' => 'Gestión de eventos registrados',
 				'icon' => 'icon-time',
+				'section' => $section,
+				'where_array' => $where,
+				'rows' => $rows,
+				'results' => false,
+				'pagination' => $this->pagination,
+				'count' => $total_counter,
 			);
 		$this->load->view('header',$data);
 		$this->load->view('logs');

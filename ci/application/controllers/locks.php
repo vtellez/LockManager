@@ -60,7 +60,6 @@ class Locks extends CI_Controller {
 
             default: //all
                 break;  
-
         }
 
         switch($section)

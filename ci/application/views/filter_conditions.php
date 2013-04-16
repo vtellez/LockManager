@@ -38,6 +38,12 @@
  	        	  						echo ($value == $this->config->item('phishing_type')) ? 'Dirección Phishing' : '';
  	        	  						break;
 
+                                    case 'logs.type':
+                                        echo "Tipo de eventos: ";
+                                        echo ($value == "users") ? 'Usuarios' : '';
+                                        echo ($value == "auto") ? 'Automáticos' : '';
+                                        break;
+
  	        	  					default:
  	        	  						echo "$key es $value";
  	        	  						break;

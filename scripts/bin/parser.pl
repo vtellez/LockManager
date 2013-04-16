@@ -107,7 +107,7 @@ $query = "UPDATE locks SET state = $STATE_UNLOCK, date ="
 	     ."$timestamp, owner = '$owner' where state = $STATE_LOCK AND "
 	     ."date <= $SYSDATE AND type_id = $type";
 
-if ($PHISHING eq 1)
+if ($PROGRAM eq "qevents")
 {
 	$query = $query.";";
 }else{

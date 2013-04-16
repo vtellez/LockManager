@@ -34,3 +34,13 @@ CREATE TABLE IF NOT EXISTS locks (
         FOREIGN KEY(type_id) REFERENCES lock_types(type_id)
         ON DELETE CASCADE
         ) ENGINE=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS los (
+        log_id INT UNSIGNED NOT NULL,
+        date INT NOT NULL,
+        owner VARCHAR(25) NOT NULL,
+        description VARCHAR(200),
+        type ENUM('users','auto') NOT NULL,
+        PRIMARY KEY(log_id)
+        ) ENGINE=InnoDB;

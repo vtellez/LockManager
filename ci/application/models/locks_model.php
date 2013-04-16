@@ -84,6 +84,33 @@ class Locks_model extends CI_Model {
         $result = $this->db->query($query);
     }
 
+
+    /*
+    *
+    * LOGS METHODS
+    *
+    */
+
+    function get_logs($where_array,$limit,$offset)
+    {
+        $this->db->select("*");
+        $this->db->from('logs');
+        $this->db->where($where_array);
+        $this->db->order_by('date', 'desc'); 
+        $this->db->limit($limit,$offset);
+        return $this->db->get();
+    }
+
+    function get_logs_total($where_array)
+    {
+        $this->db->select("*");
+        $this->db->from('logs');
+        $this->db->where($where_array);
+        return $this->db->get()->num_rows();
+    }
+
+
+
 }
 
 /* EOF */
