@@ -39,7 +39,8 @@ class Locks extends CI_Controller {
         
         $query = $this->input->post('query');
       
-        if($query){
+        if($query)
+        {
             $results = true;
             $section = 'results';
             $lock_type = $this->input->post('lock_type');
@@ -142,7 +143,8 @@ class Locks extends CI_Controller {
     {
         $query = $this->input->post('query');
      
-        if($query){
+        if($query)
+        {
             $section = 'results';
             $lock_type = $this->input->post('lock_type');
             $state = $this->input->post('state');
@@ -172,7 +174,8 @@ class Locks extends CI_Controller {
 		$lock = $this->Locks_model->get_lock($lockId);
         
         $error = false;
-        if(!$lock){
+        if(!$lock)
+        {
             redirect("/locks/repo/search", 'refresh');
         }
 		
@@ -185,8 +188,6 @@ class Locks extends CI_Controller {
 		$this->load->view('header',$data);
 		$this->load->view('detailed_view');
 		$this->load->view('footer');
-	
-
     }
 
 

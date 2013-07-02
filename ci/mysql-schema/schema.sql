@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS locks (
         ) ENGINE=InnoDB;
 
 
-CREATE TABLE IF NOT EXISTS los (
+CREATE TABLE IF NOT EXISTS logs (
         log_id INT UNSIGNED NOT NULL,
         date INT NOT NULL,
         owner VARCHAR(25) NOT NULL,

@@ -20,7 +20,8 @@
  *    <http://www.gnu.org/licenses/>.
  */
 
-class Locks_model extends CI_Model {
+class Locks_model extends CI_Model 
+{
 
    function __construct()
     {
@@ -110,7 +111,5 @@ class Locks_model extends CI_Model {
     }
 
 
-
 }
-
 /* EOF */

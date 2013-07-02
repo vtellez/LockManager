@@ -40,15 +40,21 @@ if ($PROGRAM eq "dovecot")
 		$owner = "dovecot";
 		$type = $USER;
 		$DOVECOT = 1;
-}elsif ($PROGRAM eq "smtp"){
+}
+elsif ($PROGRAM eq "smtp")
+{
 		$owner = "qmail";
 		$type = $IP;
 		$SMTP = 1;
-}elsif ($PROGRAM eq "qevents"){
+}
+elsif ($PROGRAM eq "qevents")
+{
 		$owner = "qmail-scanner";
 		$type = $PHISHING;
 		$QEVENTS = 1;
-}elsif ($PROGRAM eq "iptables"){
+}
+elsif ($PROGRAM eq "iptables")
+{
 		$owner = "owncloud";
 		$type = $HDD;
 		$IPTABLES = 1;
@@ -89,9 +95,11 @@ while (<IN>)
 	}
 	else 
 	{
-		#write line
-		print OUTPUT "$_\n";	
+
 	}
+
+	#write line
+	print OUTPUT "$_\n";	
 
 }#while
 

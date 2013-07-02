@@ -95,23 +95,13 @@
 </tr>
 </tbody>
 </table>
-
-
-
-
-
             </div>
-
             <div class="tab-pane fade in" id="history">
                 <div class="tab-title">
                 </div>
             </div>
         </div>
-
-
-
 </div>
 
 </div>
 </div>
-

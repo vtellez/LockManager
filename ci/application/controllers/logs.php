@@ -52,9 +52,9 @@ class Logs extends CI_Controller {
 
         //Get locks list
 		$this->load->model('Locks_model');
-		$rows = $this->Locks_model->get_locks($where,$this->config->item('num_item_pagina'),(int)$this->uri->segment(5));
+		$rows = $this->Locks_model->get_logs($where,$this->config->item('num_item_pagina'),(int)$this->uri->segment(5));
         //Get total counter
-        $total_counter = $this->Locks_model->get_locks_total($where);
+        $total_counter = $this->Locks_model->get_logs_total($where);
 
         //Cargamos los enlaces a la paginacion
         $this->load->library('pagination');

@@ -8,15 +8,8 @@
 <div class="tab-pane active" id="tab1">
 	<h3><i class="icon-star"></i> &nbsp;Dashboard</h3>
           <div class="row-fluid">
-            <div class="span4">
+            <div class="span4 offset2">
 		<center>
-              <h4><i class="icon-user"></i> Usuarios bloqueados</h4>
-              <p><img src="<?php echo base_url("img/chart.png");?>" /></p>
-		<p><a class="btn" href="#">Ver detalles &raquo;</a></p>
-		</center>
-            </div><!--/span-->
-            <div class="span4">
-		<center><br/>
 		<a href="<?php echo site_url("locks");?>" 
 		class="btn btn-large" style="padding-left:30px;padding-right:30px;padding-top:35px;">
 			<h3><i class="icon-lock icon-4x"></i>
@@ -26,26 +19,17 @@
 		</center>
             </div><!--/span-->
             <div class="span4">
-		<center>
-              <h4><i class="icon-globe"></i>&nbsp; Direcciones IP bloqueadas</h4>
-              <p><img src="<?php echo base_url("img/chart.png");?>" /></p>
-		<p><a class="btn" href="#">Ver detalles &raquo;</a></p>
-		</center>
-            </div><!--/span-->
-          </div><!--/row-->
-
-<br/>
-
-          <div class="row-fluid">
-            <div class="span3">
-		<a href="<?php echo site_url("search");?>" 
+	<a href="<?php echo site_url("search");?>" 
 		class="btn btn-large" style="padding-left:30px;padding-right:30px;padding-top:35px;">
 			<h3><i class="icon-search icon-4x"></i>
 			<br/><br/>Buscador</h3>
 			<p>Consulta nuestra sección de ayuda</p>
 		</a>
             </div><!--/span-->
-            <div class="span3">
+          </div><!--/row-->
+<br/>
+          <div class="row-fluid">
+            <div class="span4">
 		<a href="<?php echo site_url("logs");?>" 
 		class="btn btn-large" style="padding-left:30px;padding-right:30px;padding-top:35px;">
 			<h3><i class="icon-time icon-4x"></i>
@@ -53,7 +37,7 @@
 			<p>Consulta nuestra sección de ayuda</p>
 		</a>
             </div><!--/span-->
-            <div class="span3">
+            <div class="span4">
 		<a href="<?php echo site_url("stats");?>" 
 		class="btn btn-large" style="padding-left:30px;padding-right:30px;padding-top:35px;">
 			<h3><i class="icon-bar-chart icon-4x"></i>
@@ -61,7 +45,7 @@
 			<p>Consulta nuestra sección de ayuda</p>
 		</a>
             </div><!--/span-->
-            <div class="span3">
+            <div class="span4">
 		<a href="<?php echo site_url("help");?>" 
 		class="btn btn-large" style="padding-left:30px;padding-right:30px;padding-top:35px;">
 			<h3><i class="icon-question-sign icon-4x"></i>
@@ -73,7 +57,4 @@
         </div><!--/span-->
       </div><!--/row-->
 </div>
-
-
 </div>
-
