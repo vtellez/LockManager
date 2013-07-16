@@ -1,7 +1,7 @@
-BringBack
+LockManager
 =========
 
-BringBack is a Free Software tool that lets you restore
+LockManager is a Free Software tool that lets you restore
 yours email, calendars and contacts from a backup server.
 
 Released under GNU Affero General Public License
@@ -23,7 +23,7 @@ You can find this project's documentation at http://recupera.org.es/doc/
 Thanks
 -------
 
-BringBack is possible thanks to the following projects:
+LockManager is possible thanks to the following projects:
 
 * [CodeIgniter](http://codeigniter.com)
 * [jQuery](http://jquery.com)
