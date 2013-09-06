@@ -81,7 +81,7 @@ class Locks_model extends CI_Model
     {
 
         $owner = 'web_creator';
-        $query ="INSERT INTO locks (type_id,subtype,state,value,owner,comment,date,lock_counter) VALUES ($lock_type,'NULL',$state,'$value','$owner','$comment',".time().",1) ON DUPLICATE KEY UPDATE state = $state;";
+        $query ="INSERT INTO locks (type_id,subtype,state,value,owner,comment,date,birth_date,lock_counter) VALUES ($lock_type,'NULL',$state,'$value','$owner','$comment',".time().",".time().",1) ON DUPLICATE KEY UPDATE state = $state;";
         $result = $this->db->query($query);
     }
 

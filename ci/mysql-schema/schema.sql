@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS locks (
         value VARCHAR(100) NOT NULL,
         owner VARCHAR(25) NOT NULL,
         comment VARCHAR (255),
+        birth_date INT NOT NULL,        
         date INT NOT NULL,
         lock_counter INT DEFAULT 1 NOT NULL,
 

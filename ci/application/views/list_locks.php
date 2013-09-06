@@ -24,7 +24,7 @@ function changeLockState(lockId,lockValue)
             var divid = "#lastupdate"+lockId;
             $(divid).html(date+" por el usuario "+owner);
   
-             $("#freeow").freeow("Bloqueo actualizado","El estado del bloqueo ha cambiado con éxito.", {
+            $("#freeow").freeow("Bloqueo actualizado","El estado del bloqueo ha cambiado con éxito.", {
                 classes: ["smokey","success","slide"],
             });
 
@@ -33,14 +33,13 @@ function changeLockState(lockId,lockValue)
         error: function (xhr, ajaxOptions, thrownError)
         {   
  
-             $("#freeow").freeow("Error",xhr.responseText, {
+            $("#freeow").freeow("Error",xhr.responseText, {
                 classes: ["smokey","error","slide"],
             });
 
         }
     });
 }
-
 </script>
 
 <table class="table table-bordered table-striped">

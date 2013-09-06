@@ -21,6 +21,8 @@
 # *    License along with Bloquea. If not, see
 # *    <http://www.gnu.org/licenses/>.
 # */
+
+
 $PATH = $ARGV[0];
 $HOST = $ARGV[1];
 $PROGRAM = $ARGV[2];
@@ -40,6 +42,12 @@ if ($PROGRAM eq "dovecot")
 		$owner = "dovecot";
 		$type = $USER;
 		$DOVECOT = 1;
+}
+elsif ($PROGRAM eq "badmailfrom")
+{
+		$owner = "qmail";
+		$type = $IP;
+		$SMTP = 1;
 }
 elsif ($PROGRAM eq "smtp")
 {
@@ -99,7 +107,7 @@ while (<IN>)
 	}
 
 	#write line
-	print OUTPUT "$_\n";	
+	print OUTPUT "$_\n";
 
 }#while
 
@@ -113,7 +121,7 @@ $timestamp = time;
 # Unlock all locks that they have deleted from file
 $query = "UPDATE locks SET state = $STATE_UNLOCK, date ="
 	     ."$timestamp, owner = '$owner' where state = $STATE_LOCK AND "
-	     ."date <= $SYSDATE AND type_id = $type";
+	     ."date <= $SYSDATE AND type_id";
 
 if ($PROGRAM eq "qevents")
 {
@@ -125,7 +133,7 @@ if ($PROGRAM eq "qevents")
 $sth = $dbh->prepare($query);
 $sth->execute();
 
-print "$query\n";
+#print "$query\n";
 
 
 
@@ -143,9 +151,6 @@ print "$query\n";
 # 	print OUTPUT "$value\n";	
 # 	print OUTPUT "$value\@$domain\n";
 # }
-
-
-
 
 $sth->finish;
 $dbh->disconnect;
