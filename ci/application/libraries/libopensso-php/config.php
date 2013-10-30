@@ -1,6 +1,6 @@
 <?php
 // Configuration package used
-define('CONFIG_PACK', 'sso.us.es_INTERNO_001');
+define('CONFIG_PACK', 'ssopre.us.es_001');
 
 
 // Package directory (do not change)

@@ -22,6 +22,12 @@
 
 class Search extends CI_Controller {
 
+    public function __construct()
+    {
+            parent::__construct();
+            $this->controlacceso->control();
+    }
+    
 	public function index()
 	{
 	

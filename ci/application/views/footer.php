@@ -26,4 +26,6 @@
 	<br/>
       </footer>
 </div> <!-- /container -->
-</div></body></html>
+</div>
+</body>
+</html>

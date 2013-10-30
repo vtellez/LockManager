@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "locks";
+$route['default_controller'] = "dashboard";
 $route['404_override'] = '';
 
 
